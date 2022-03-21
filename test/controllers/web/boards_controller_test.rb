@@ -1,8 +1,12 @@
-require "test_helper"
+# frozen_string_literal: true
 
-class Web::BoardsControllerTest < ActionController::TestCase
-  test "should get show" do
-    get :show
-    assert_response :success
+require 'test_helper'
+
+module Web
+  class BoardsControllerTest < ActionController::TestCase
+    test 'should get show' do
+      get :show
+      assert_response :success
+    end
   end
 end
