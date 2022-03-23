@@ -24,6 +24,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'simple_form'
 gem 'state_machines'
 gem 'state_machines-activerecord'
+gem 'webpacker-react', '~> 0.3.2'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
