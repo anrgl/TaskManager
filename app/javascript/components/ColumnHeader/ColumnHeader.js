@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import IconButton from '@material-ui/core/IconButton';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import IconButton from "@material-ui/core/IconButton";
+import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 
-import useStyles from './useStyles';
+import useStyles from "./useStyles";
 
 const ColumnHeader = ({ column, onLoadMore }) => {
   const styles = useStyles();
@@ -26,13 +26,13 @@ const ColumnHeader = ({ column, onLoadMore }) => {
       </div>
       {count !== totalCount && (
         <div className={styles.actions}>
-          <IconButton aria-label='Load more' onClick={() => handleLoadMore()}>
+          <IconButton aria-label="Load more" onClick={() => handleLoadMore()}>
             <SystemUpdateAltIcon fontSize="small" />
           </IconButton>
         </div>
       )}
     </div>
-  )
+  );
 };
 
 ColumnHeader.propTypes = {
