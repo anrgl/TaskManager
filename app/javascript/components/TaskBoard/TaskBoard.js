@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import KanbanBoard from "@lourenci/react-kanban";
 import "@lourenci/react-kanban/dist/styles.css";
 import { propOr } from "ramda";
-
-import Task from "components/Task";
-import ColumnHeader from "../ColumnHeader";
-import TasksRepository from "repositories/TasksRepository";
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+
+
+import AddPopup from "forms/AddPopup";
+import EditPopup from "forms/EditPopup";
+import TaskForm from "forms/TaskForm";
+import TasksRepository from "repositories/TasksRepository";
+import Task from "components/Task";
+import ColumnHeader from "components/ColumnHeader";
 import useStyles from "./useStyles";
-import AddPopup from "../../forms/AddPopup";
-import EditPopup from "../../forms/EditPopup";
-import TaskForm from "../../forms/TaskForm";
 
 const STATES = [
   { key: "new_task", value: "New" },
@@ -22,6 +23,12 @@ const STATES = [
   { key: "released", value: "Released" },
   { key: "archived", value: "Archived" },
 ];
+
+const MODES = {
+  ADD: "add",
+  EDIT: "edit",
+  NONE: "none",
+};
 
 const initialBoard = {
   columns: STATES.map((column) => ({
@@ -36,6 +43,7 @@ const TaskBoard = () => {
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState([]);
   const [openedTaskId, setOpenedTaskId] = useState(null);
+  const [mode, setMode] = useState(MODES.NONE);
   useEffect(() => loadBoard(), []);
   useEffect(() => generateBoard(), [boardCards]);
 
@@ -81,7 +89,7 @@ const TaskBoard = () => {
         return {
           id: key,
           title: value,
-          cards: propOr({}, "cards", boardCards[key]),
+          cards: propOr([], "cards", boardCards[key]),
           meta: propOr({}, "meta", boardCards[key]),
         };
       }),
@@ -114,12 +122,6 @@ const TaskBoard = () => {
       });
   };
 
-  const MODES = {
-    ADD: "add",
-    EDIT: "edit",
-    NONE: "none",
-  };
-
   const handleOpenAddPopup = () => {
     setMode(MODES.ADD);
   };
@@ -128,8 +130,6 @@ const TaskBoard = () => {
     setMode(MODES.NONE);
     setOpenedTaskId(null);
   };
-
-  const [mode, setMode] = useState(MODES.NONE);
 
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
