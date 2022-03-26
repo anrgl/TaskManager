@@ -59,7 +59,7 @@ export default {
     return axios.put(url, body).then(camelize);
   },
 
-  delete(url, _json) {
+  delete(url) {
     return axios.delete(url).then(camelize);
   },
 };

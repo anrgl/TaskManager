@@ -7,7 +7,8 @@ import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 import Task from "components/Task";
 import useStyles from "./useStyles";
 
-const ColumnHeader = ({ column, onLoadMore }) => {
+const ColumnHeader = (props) => {
+  const { column, onLoadMore } = props;
   const styles = useStyles();
   const {
     id,

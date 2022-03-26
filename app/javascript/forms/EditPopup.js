@@ -11,23 +11,17 @@ import { CircularProgress } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 
-import Form from "../components/Form";
-
+import Form from "components/Form";
 import useStyles from "./useStyles";
 
-const EditPopup = ({
-  cardId,
-  onClose,
-  onCardDestroy,
-  onLoadCard,
-  onCardUpdate,
-}) => {
+const EditPopup = (props) => {
+  const { cardId, onClose, onCardDestroy, onLoadCard, onCardUpdate } = props;
   const [task, setTask] = useState(null);
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
   const styles = useStyles();
 
-  useEffect(() => {
+  useEffect(async () => {
     onLoadCard(cardId).then(setTask);
   }, []);
 

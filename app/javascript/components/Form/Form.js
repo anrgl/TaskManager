@@ -6,10 +6,11 @@ import TextField from "@material-ui/core/TextField";
 
 import useStyles from "./useStyles";
 
-const Form = ({ errors, onChange, task }) => {
+const Form = (props) => {
+  const { errors, onChange, task } = props;
+  const styles = useStyles();
   const handleChangeTextField = (fieldName) => (event) =>
     onChange({ ...task, [fieldName]: event.target.value });
-  const styles = useStyles();
 
   return (
     <form className={styles.root}>

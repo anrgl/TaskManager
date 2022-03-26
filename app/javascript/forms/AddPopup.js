@@ -16,8 +16,10 @@ import TaskForm from "forms/TaskForm";
 
 import useStyles from "./useStyles";
 
-const AddPopup = ({ onClose, onCreateCard }) => {
-  const [task, changeTask] = useState(TaskForm.defaultAttributes());
+const AddPopup = (props) => {
+  const { onClose, onCreateCard } = props;
+  const styles = useStyles();
+  const [task, setTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
   const handleCreate = () => {
@@ -33,8 +35,7 @@ const AddPopup = ({ onClose, onCreateCard }) => {
     });
   };
   const handleChangeTextField = (fieldName) => (event) =>
-    changeTask({ ...task, [fieldName]: event.target.value });
-  const styles = useStyles();
+    setTask({ ...task, [fieldName]: event.target.value });
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
