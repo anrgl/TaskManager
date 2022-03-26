@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import SystemUpdateAltIcon from "@material-ui/icons/SystemUpdateAlt";
 
+import Task from "components/Task";
 import useStyles from "./useStyles";
 
 const ColumnHeader = ({ column, onLoadMore }) => {
@@ -40,7 +41,10 @@ ColumnHeader.propTypes = {
   column: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    cards: PropTypes.array.isRequired,
+    cards: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    })).isRequired,
     meta: PropTypes.shape({
       totalCount: PropTypes.number,
       currentPage: PropTypes.number,
