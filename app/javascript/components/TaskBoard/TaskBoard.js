@@ -6,8 +6,8 @@ import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 
-import AddPopup from "forms/AddPopup";
-import EditPopup from "forms/EditPopup";
+import AddPopup from "components/AddPopup";
+import EditPopup from "components/EditPopup";
 import TaskForm from "forms/TaskForm";
 import TasksRepository from "repositories/TasksRepository";
 import Task from "components/Task";
