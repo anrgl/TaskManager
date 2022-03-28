@@ -17,7 +17,7 @@ import TaskForm from "forms/TaskForm";
 import useStyles from "./useStyles";
 
 const AddPopup = (props) => {
-  const { onClose, onCreateCard } = props;
+  const { onClose, onCardCreate } = props;
   const styles = useStyles();
   const [task, setTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
@@ -25,7 +25,7 @@ const AddPopup = (props) => {
   const handleCreate = () => {
     setSaving(true);
 
-    onCreateCard(task).catch((error) => {
+    onCardCreate(task).catch((error) => {
       setSaving(false);
       setErrors(error || {});
 
@@ -34,8 +34,8 @@ const AddPopup = (props) => {
       }
     });
   };
-  const handleChangeTextField = (fieldName) => (onChangeTextField) =>
-    setTask({ ...task, [fieldName]: onChangeTextField.target.value });
+  const handleTextFieldChange = (fieldName) => (onTextFieldChange) =>
+    setTask({ ...task, [fieldName]: onTextFieldChange.target.value });
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
@@ -53,7 +53,7 @@ const AddPopup = (props) => {
             <TextField
               error={has("name", errors)}
               helperText={errors.name}
-              onChange={handleChangeTextField("name")}
+              onChange={handleTextFieldChange("name")}
               value={task.name}
               label="Name"
               required
@@ -62,7 +62,7 @@ const AddPopup = (props) => {
             <TextField
               error={has("description", errors)}
               helperText={errors.description}
-              onChange={handleChangeTextField("description")}
+              onChange={handleTextFieldChange("description")}
               value={task.description}
               label="Description"
               required
@@ -88,7 +88,7 @@ const AddPopup = (props) => {
 
 AddPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onCreateCard: PropTypes.func.isRequired,
+  onCardCreate: PropTypes.func.isRequired,
 };
 
 export default AddPopup;
