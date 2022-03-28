@@ -159,7 +159,7 @@ const TaskBoard = () => {
     });
   };
 
-  const handleOpenEditPopup = (task) => {
+  const handleEditPopupOpen = (task) => {
     setOpenedTaskId(task.id);
     setMode(MODES.EDIT);
   };
@@ -182,7 +182,7 @@ const TaskBoard = () => {
         disableColumnDrag
         onCardDragEnd={handleCardDragEnd}
         renderCard={(card) => (
-          <Task onClick={handleOpenEditPopup} task={card} />
+          <Task onEditPopupOpen={handleEditPopupOpen} task={card} />
         )}
         renderColumnHeader={(column) => (
           <ColumnHeader column={column} onLoadMore={loadColumnMore} />
