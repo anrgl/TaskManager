@@ -34,8 +34,8 @@ const AddPopup = (props) => {
       }
     });
   };
-  const handleChangeTextField = (fieldName) => (event) =>
-    setTask({ ...task, [fieldName]: event.target.value });
+  const handleChangeTextField = (fieldName) => (onChangeTextField) =>
+    setTask({ ...task, [fieldName]: onChangeTextField.target.value });
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
