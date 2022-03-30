@@ -5,7 +5,7 @@ module Web
     before_action :authenticate_user!
 
     def show
-      render(react_component: 'TaskBoard', props: {})
+      render(react_component: 'App', props: {})
     end
   end
 end
