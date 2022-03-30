@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import KanbanBoard from "@lourenci/react-kanban";
 import "@lourenci/react-kanban/dist/styles.css";
-import { propOr } from "ramda";
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-
 
 import AddPopup from "forms/AddPopup";
 import EditPopup from "forms/EditPopup";
@@ -12,17 +10,10 @@ import TaskForm from "forms/TaskForm";
 import TasksRepository from "repositories/TasksRepository";
 import Task from "components/Task";
 import ColumnHeader from "components/ColumnHeader";
-import useStyles from "./useStyles";
 
-const STATES = [
-  { key: "new_task", value: "New" },
-  { key: "in_development", value: "In Dev" },
-  { key: "in_qa", value: "In QA" },
-  { key: "in_code_review", value: "in CR" },
-  { key: "ready_for_release", value: "Ready for release" },
-  { key: "released", value: "Released" },
-  { key: "archived", value: "Archived" },
-];
+import useTasks from "hooks/store/useTasks";
+
+import useStyles from "./useStyles";
 
 const MODES = {
   ADD: "add",
@@ -30,22 +21,12 @@ const MODES = {
   NONE: "none",
 };
 
-const initialBoard = {
-  columns: STATES.map((column) => ({
-    id: column.key,
-    title: column.value,
-    cards: [],
-    meta: {},
-  })),
-};
-
 const TaskBoard = () => {
-  const [board, setBoard] = useState(initialBoard);
+  const { board, loadBoard } = useTasks();
   const [boardCards, setBoardCards] = useState([]);
   const [openedTaskId, setOpenedTaskId] = useState(null);
   const [mode, setMode] = useState(MODES.NONE);
   useEffect(() => loadBoard(), []);
-  useEffect(() => generateBoard(), [boardCards]);
 
   const styles = useStyles();
 
@@ -68,6 +49,20 @@ const TaskBoard = () => {
     });
   };
 
+  const handleOpenAddPopup = () => {
+    setMode(MODES.ADD);
+  };
+
+  const handleOpenEditPopup = (task) => {
+    setOpenedTaskId(task.id);
+    setMode(MODES.EDIT);
+  };
+
+  const handleClose = () => {
+    setMode(MODES.NONE);
+    setOpenedTaskId(null);
+  };
+
   const loadColumnMore = (state, page = 1, perPage = 10) => {
     loadColumn(state, page, perPage).then(({ data }) => {
       setBoardCards((prevState) => {
@@ -81,25 +76,6 @@ const TaskBoard = () => {
         };
       });
     });
-  };
-
-  const generateBoard = () => {
-    const board = {
-      columns: STATES.map(({ key, value }) => {
-        return {
-          id: key,
-          title: value,
-          cards: propOr([], "cards", boardCards[key]),
-          meta: propOr({}, "meta", boardCards[key]),
-        };
-      }),
-    };
-
-    setBoard(board);
-  };
-
-  const loadBoard = () => {
-    STATES.map(({ key }) => loadColumnInitial(key));
   };
 
   const handleCardDragEnd = (task, source, destination) => {
@@ -122,15 +98,6 @@ const TaskBoard = () => {
       });
   };
 
-  const handleOpenAddPopup = () => {
-    setMode(MODES.ADD);
-  };
-
-  const handleClose = () => {
-    setMode(MODES.NONE);
-    setOpenedTaskId(null);
-  };
-
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
@@ -138,8 +105,7 @@ const TaskBoard = () => {
       handleClose();
     });
   };
-
-  const loadTask = (id) => {
+  const handleTaskLoad = (id) => {
     return TasksRepository.show(id).then(({ data: { task } }) => task);
   };
 
@@ -159,11 +125,6 @@ const TaskBoard = () => {
     });
   };
 
-  const handleOpenEditPopup = (task) => {
-    setOpenedTaskId(task.id);
-    setMode(MODES.EDIT);
-  };
-
   return (
     <div>
       {mode === MODES.ADD && (
@@ -171,7 +132,7 @@ const TaskBoard = () => {
       )}
       {mode === MODES.EDIT && (
         <EditPopup
-          onLoadCard={loadTask}
+          onLoadCard={handleTaskLoad}
           onCardDestroy={handleTaskDestroy}
           onCardUpdate={handleTaskUpdate}
           onClose={handleClose}
