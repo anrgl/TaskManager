@@ -48,7 +48,7 @@ const EditPopup = (props) => {
     });
   };
   const isLoading = isNil(task);
-  const handleFormChange = setTask;
+  const handleFormChange = (task) => setTask(task);
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
