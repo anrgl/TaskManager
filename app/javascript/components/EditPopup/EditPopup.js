@@ -48,6 +48,7 @@ const EditPopup = (props) => {
     });
   };
   const isLoading = isNil(task);
+  const handleFormChange = (task) => setTask(task);
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
@@ -70,7 +71,7 @@ const EditPopup = (props) => {
               <CircularProgress />
             </div>
           ) : (
-            <Form errors={errors} onChange={setTask} task={task} />
+            <Form errors={errors} onChange={handleFormChange} task={task} />
           )}
         </CardContent>
         <CardActions className={styles.actions}>

@@ -6,8 +6,8 @@ import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
 
-import AddPopup from "forms/AddPopup";
-import EditPopup from "forms/EditPopup";
+import AddPopup from "components/AddPopup";
+import EditPopup from "components/EditPopup";
 import TaskForm from "forms/TaskForm";
 import TasksRepository from "repositories/TasksRepository";
 import Task from "components/Task";
@@ -159,7 +159,7 @@ const TaskBoard = () => {
     });
   };
 
-  const handleOpenEditPopup = (task) => {
+  const handleEditPopupOpen = (task) => {
     setOpenedTaskId(task.id);
     setMode(MODES.EDIT);
   };
@@ -167,7 +167,7 @@ const TaskBoard = () => {
   return (
     <div>
       {mode === MODES.ADD && (
-        <AddPopup onCreateCard={handleTaskCreate} onClose={handleClose} />
+        <AddPopup onCardCreate={handleTaskCreate} onClose={handleClose} />
       )}
       {mode === MODES.EDIT && (
         <EditPopup
@@ -182,7 +182,7 @@ const TaskBoard = () => {
         disableColumnDrag
         onCardDragEnd={handleCardDragEnd}
         renderCard={(card) => (
-          <Task onClick={handleOpenEditPopup} task={card} />
+          <Task onEditPopupOpen={handleEditPopupOpen} task={card} />
         )}
         renderColumnHeader={(column) => (
           <ColumnHeader column={column} onLoadMore={loadColumnMore} />

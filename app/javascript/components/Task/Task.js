@@ -11,10 +11,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import useStyles from "./useStyle";
 
 const Task = (props) => {
-  const { task, onClick } = props;
+  const { task, onEditPopupOpen } = props;
   const styles = useStyles;
 
-  const handleClick = () => onClick(task);
+  const handleClick = () => onEditPopupOpen(task);
   const action = (
     <IconButton onClick={handleClick}>
       <EditIcon />

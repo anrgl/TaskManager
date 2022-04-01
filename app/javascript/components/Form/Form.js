@@ -11,8 +11,8 @@ import useStyles from "./useStyles";
 const Form = (props) => {
   const { errors, onChange, task } = props;
   const styles = useStyles();
-  const handleChangeTextField = (fieldName) => (event) =>
-    onChange({ ...task, [fieldName]: event.target.value });
+  const handleChangeTextField = (fieldName) => (onTextFieldChange) =>
+    onChange({ ...task, [fieldName]: onTextFieldChange.target.value });
 
   const handleSelectChange = (fieldName) => (user) =>
     onChange({ ...task, [fieldName]: user });
