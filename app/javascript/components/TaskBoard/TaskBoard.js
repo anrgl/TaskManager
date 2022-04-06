@@ -30,7 +30,7 @@ const TaskBoard = () => {
 
   const styles = useStyles();
 
-  const loadColumn = (state, page, perPage) => {
+  const loadColumn = async (state, page, perPage) => {
     return TasksRepository.index({
       q: { stateEq: state },
       page,
